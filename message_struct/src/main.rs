@@ -32,6 +32,20 @@ enum Event {
     Message((UserId, TopicId, String)),
 }
 
+fn process_event(event: &Event) {
+    match event {
+        Event::Join((uid, tid)) => println!("User {:?} joins topic {:?}", uid, tid),
+        Event::Leave((uid, tid)) => println!("User {:?} leaves topic {:?}", uid, tid),
+        Event::Message((uid, tid, msg)) => println!("User {:?} sends message in topic {:?}, message body: {:?}", uid, tid, msg),
+    }
+}
+
+fn process_message(event: &Event) {
+    if let Event::Message((uid, tid, msg)) = event {
+        println!("User {:?} sends message in topic {:?}, message body: {:?}", uid, tid, msg);
+    }
+}
+
 fn main() {
     let alice = User { id: UserId(1), name: "Alice".into(), gender: Gender::Female };
     let bob = User { id: UserId(2), name: "Bob".into(), gender: Gender::Male };
@@ -43,4 +57,9 @@ fn main() {
     let event4 = Event::Leave((alice.id, topic.id));
 
     println!("Evt1: {:?}, Evt2: {:?}, Evt3: {:?}, Evt4: {:?}", event1, event2, event3, event4);
+    process_event(&event1);
+    process_event(&event2);
+    process_event(&event3);
+    process_event(&event4);
+    process_message(&event3);
 }
