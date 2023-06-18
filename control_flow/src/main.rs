@@ -36,9 +36,20 @@ fn fib_for(n: u8) {
     }
 }
 
+fn fib_recursive(n: u8) -> u8 {
+    if n == 0 {
+        0
+    } else if n == 1 {
+        1
+    } else {
+        fib_recursive(n - 1) + fib_recursive(n - 2)
+    }
+}
+
 fn main() {
     let n = 10;
     fib_loop(n);
     fib_while(n);
     fib_for(n);
+    println!("{}", fib_recursive(n));
 }
